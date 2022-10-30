@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1cf951c7-ab11-4ee9-abf2-3e8c5e6a1b8e" name="Changes" comment="intellij modifications">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/ReadMe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SnakeGame/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SnakeGame/GamePanel.java" afterDir="false" />
-    </list>
+    <list default="true" id="1cf951c7-ab11-4ee9-abf2-3e8c5e6a1b8e" name="Changes" comment="intellij modifications" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
