@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int[] x = new int[TOTAL_UNITS];
     static final int[] y = new int[TOTAL_UNITS];
     static final int DELAY = 100;
-    int initialSize = 6;
+    int snakeSize = 6;
     int foodEaten;
     int foodX;
     int foodY;
@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements ActionListener {
             g.setColor(Color.RED);
             g.fillOval(foodX, foodY, UNIT_SIZE, UNIT_SIZE);
 
-            for (int i = 0; i < initialSize; i++) {
+            for (int i = 0; i < snakeSize; i++) {
                 if (i == 0) {
                     g.setColor(Color.decode("#00e5e5"));
                     g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
@@ -83,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void moveSnake() {
 
-        for (int i = initialSize; i > 0; i--) {
+        for (int i = snakeSize; i > 0; i--) {
             x[i] = x[i - 1];
             y[i] = y[i - 1];
         }
@@ -111,7 +111,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void checkFood() {
         if (x[0] == foodX && y[0] == foodY) {
-            initialSize++;
+            snakeSize++;
             foodEaten++;
             newFood();
         }
@@ -120,7 +120,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void checkCollisions() {
 
         // collision check with body
-        for (int i = initialSize; i > 0; i--) {
+        for (int i = snakeSize; i > 0; i--) {
             if (x[0] == x[i] && y[0] == y[i]) {
                 running = false;
                 break;
