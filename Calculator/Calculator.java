@@ -25,15 +25,17 @@ public class Calculator implements ActionListener{
 
     Calculator(){
 
-        frame = new JFrame("Calculator");
+        frame = new JFrame("Calculator - by ChiragAgg5k");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(420, 550);
         frame.setLayout(null);
+        frame.setBackground(Color.BLACK);
 
         textField = new JTextField();
         textField.setBounds(50, 25, 300, 50);
         textField.setFont(myFont);
         textField.setEditable(false);
+        textField.setBackground(Color.lightGray);
 
         addButton = new JButton("+");
         subButton = new JButton("-");
@@ -41,6 +43,7 @@ public class Calculator implements ActionListener{
         divButton = new JButton("/");
         decButton = new JButton(".");
         equButton = new JButton("=");
+
         delButton = new JButton("Del");
         clrButton = new JButton("Clr");
         negButton = new JButton("(-)");
@@ -92,6 +95,7 @@ public class Calculator implements ActionListener{
         panel.add(numberButtons[0]);
         panel.add(equButton);
         panel.add(divButton);
+        panel.setBackground(Color.lightGray);
 
         frame.add(panel);
         frame.add(negButton);
