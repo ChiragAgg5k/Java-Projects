@@ -65,19 +65,13 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
             }
             g.setColor(Color.YELLOW);
-            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            g.setFont(new Font("Rockwell", Font.BOLD, 40));
+            g.setFont(new Font("Rockwell", Font.BOLD, 40));
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + foodEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + foodEaten)) / 2, 45);
 
         } else {
             gameOver(g);
-        }
-    }
-
-    public void drawLines(Graphics g) {
-        for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
-            g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
-            g.drawLine(0, UNIT_SIZE * i, SCREEN_WIDTH, UNIT_SIZE * i);
         }
     }
 
@@ -142,7 +136,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.BLACK);
         this.setFocusable(false);
         g.setColor(Color.RED);
-        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        g.setFont(new Font("Rockwell", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
     }
@@ -163,27 +157,26 @@ public class GamePanel extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_LEFT -> {
                     if (direction != 'd') {
                         direction = 'a';
                     }
-                    break;
-
-                case KeyEvent.VK_RIGHT:
+                }
+                case KeyEvent.VK_RIGHT -> {
                     if (direction != 'a') {
                         direction = 'd';
                     }
-                    break;
-                case KeyEvent.VK_UP:
+                }
+                case KeyEvent.VK_UP -> {
                     if (direction != 's') {
                         direction = 'w';
                     }
-                    break;
-                case KeyEvent.VK_DOWN:
+                }
+                case KeyEvent.VK_DOWN -> {
                     if (direction != 'w') {
                         direction = 's';
                     }
-                    break;
+                }
             }
         }
     }

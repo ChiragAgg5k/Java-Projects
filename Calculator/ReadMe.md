@@ -1,5 +1,7 @@
-# Calculator
+<div align="center">
 
+![Calculator](thumbnail.png)
+</div>
 A very basic and simple calculator app made in java. It's the most classic program beginners make when learning a new language. I made this to learn about the language and to get a better understanding of how to use the Java's Swing library.
 
 I followed a tutorial on YouTube to make this. The tutorial can be found [here](https://www.youtube.com/watch?v=dfhmTyRTCSQ).
