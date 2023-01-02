@@ -2,54 +2,77 @@ package SnakeGame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
+/**
+ * Created by ChiragAgg5k.
+ */
 public class GamePanel extends JPanel implements ActionListener {
 
     static final int SCREEN_WIDTH = 600;
     static final int SCREEN_HEIGHT = 600;
     static final int UNIT_SIZE = 25;
     static final int TOTAL_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
-    static final int[] x = new int[TOTAL_UNITS];
-    static final int[] y = new int[TOTAL_UNITS];
+    static int[] x = new int[TOTAL_UNITS];
+    static int[] y = new int[TOTAL_UNITS];
     static final int DELAY = 100;
     int snakeSize = 6;
     int foodEaten;
     int foodX;
     int foodY;
 
+    JButton restart = new JButton("Play Again");
+
     Random random;
-    Timer timer;
+    Timer timer = new Timer(DELAY, this);
 
     // directions are mapped according aswd. d= left , w= up and so one
     char direction = 'd';
 
     boolean running = false;
 
+    /**
+     * Creates new GamePanel for Snake Game
+     */
     GamePanel() {
+
+        restart.addActionListener(e -> restart());
+        this.add(restart);
+        restart.setVisible(false);
 
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        this.setBackground(Color.decode("#005d32"));
         this.setFocusable(true);
-        this.addKeyListener(new keyboardInputs());
         startGame();
 
     }
 
+    /**
+     * Starts the game
+     */
     public void startGame() {
+
+        this.setBackground(Color.decode("#005d32"));
+        this.setBorder(BorderFactory.createLineBorder(Color.decode("#044527"), 10));
+        this.addKeyListener(new keyboardInputs());
 
         newFood();
         running = true;
-        timer = new Timer(DELAY, this);
         timer.start();
 
     }
 
+    /**
+     * Paints apple at the selected x and y coordinates,
+     * the snake parts at x y coordinates in the array
+     * and the score at the top
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        //drawLines(g);
 
         if (running) {
             g.setColor(Color.RED);
@@ -66,7 +89,6 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             g.setColor(Color.YELLOW);
             g.setFont(new Font("Rockwell", Font.BOLD, 40));
-            g.setFont(new Font("Rockwell", Font.BOLD, 40));
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + foodEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + foodEaten)) / 2, 45);
 
@@ -75,6 +97,10 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Moves the snake according to the direction from the keyboard inputs
+     * Also constantly moves the snake in the direction it is facing
+     */
     public void moveSnake() {
 
         for (int i = snakeSize; i > 0; i--) {
@@ -98,11 +124,18 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Generates random x and y coordinates for the apple
+     */
     public void newFood() {
         foodX = random.nextInt(SCREEN_WIDTH / UNIT_SIZE) * UNIT_SIZE;
         foodY = random.nextInt(SCREEN_HEIGHT / UNIT_SIZE) * UNIT_SIZE;
     }
 
+    /**
+     * Checks if the snake has eaten the apple
+     * If yes, then it generates a new apple and increases the snake size
+     */
     public void checkFood() {
         if (x[0] == foodX && y[0] == foodY) {
             snakeSize++;
@@ -111,6 +144,9 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Checks if the snake has hit the wall or itself
+     */
     public void checkCollisions() {
 
         // collision check with body
@@ -131,16 +167,52 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Shows the game over screen
+     */
     public void gameOver(Graphics g) {
 
         this.setBackground(Color.BLACK);
-        this.setFocusable(false);
+        this.setBorder(BorderFactory.createLineBorder(Color.decode("#111211"), 10));
+        this.timer.stop();
+
         g.setColor(Color.RED);
         g.setFont(new Font("Rockwell", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
-        g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2);
+        g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over")) / 2, SCREEN_HEIGHT / 2 - 50);
+
+        g.setColor(Color.YELLOW);
+        g.setFont(new Font("Rockwell", Font.BOLD, 30));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Score: " + foodEaten, (SCREEN_WIDTH - metrics2.stringWidth("Score: " + foodEaten)) / 2, SCREEN_HEIGHT / 2);
+
+        restart.setBounds(SCREEN_WIDTH / 2 - 100 / 2, SCREEN_HEIGHT / 2 + 20, 100, 50);
+        restart.setVisible(true);
+
+        g.setColor(Color.white);
+        g.setFont(new Font("Rockwell", Font.BOLD, 15));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        g.drawString("OR press esc to exit", (SCREEN_WIDTH - metrics3.stringWidth("OR press esc to exit")) / 2, SCREEN_HEIGHT / 2 + 100);
     }
 
+    /**
+     * Restarts the game
+     */
+    public void restart() {
+        snakeSize = 6;
+        foodEaten = 0;
+        direction = 'd';
+        restart.setVisible(false);
+
+        x = new int[TOTAL_UNITS];
+        y = new int[TOTAL_UNITS];
+
+        this.startGame();
+    }
+
+    /**
+     * Overrides the actionPerformed method from the ActionListener interface
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -175,6 +247,19 @@ public class GamePanel extends JPanel implements ActionListener {
                 case KeyEvent.VK_DOWN -> {
                     if (direction != 'w') {
                         direction = 's';
+                    }
+                }
+                case KeyEvent.VK_ENTER -> {
+                    if (!running) {
+                        restart();
+                    }
+                }
+
+                case KeyEvent.VK_ESCAPE -> {
+                    if (!running) {
+                        System.exit(0);
+                    } else {
+                        running = false;
                     }
                 }
             }
